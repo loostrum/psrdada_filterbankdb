@@ -1,0 +1,39 @@
+language: python
+os:
+  - linux
+python:
+  - 3.6
+  - 3.7
+  - 3.8
+install:
+  - pip install pycodestyle pytest pytest-cov codecov
+  - pip install git+https://www.github.com/AA-ALERT/psrdada-python
+  - pip install .
+script:
+#  - pytest
+  - find . -name "*.py" -exec pycodestyle --ignore E501,W503 {} +
+#after_success:
+#  - codecov
+#jobs:
+#  include:
+#    - stage: deploy
+#      python: '3.6'
+#      install:
+#        - pip install sphinx
+#        - pip install .
+#      script:
+#        - make -C docs/ html
+#        - touch docs/_build/html/.nojekyll
+#      deploy:
+#        - provider: pages:git
+#          verbose: true
+#          token: "$GITHUB_TOKEN"
+#          edge: true
+#          local_dir: "./docs/_build/html"
+#        - provider: pypi
+#          username: __token__
+#          password: "$PYPI_TOKEN"
+#          on:
+#            branch: master
+#            tags: true
+        
