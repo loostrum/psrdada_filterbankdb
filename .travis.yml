@@ -6,7 +6,7 @@ python:
   - 3.7
   - 3.8
 install:
-  - pip install pycodestyle pytest pytest-cov codecov
+  - pip install pycodestyle pytest pytest-cov codecov cython
   - pip install git+https://www.github.com/AA-ALERT/psrdada-python
   - pip install .
 script:
