@@ -52,7 +52,7 @@ def create_header(filterbank, nbeam, pagesize, flip_band=True):
     header['PARSET'] = 'noparset'
     # set TAB vs IAB
     if nbeam > 1:
-        header['SCIENCE_MODE']  = 0  # I + TAB
+        header['SCIENCE_MODE'] = 0  # I + TAB
     else:
         header['SCIENCE_MODE'] = 2  # I + IAB
 
