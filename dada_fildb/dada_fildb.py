@@ -86,7 +86,7 @@ def get_data(filterbanks, page, pagesize, order):
     return data
 
 
-def dada_fildb(files, key, order, pagesize,):
+def dada_fildb(files, key, order, pagesize, delay):
     # verify that the input files exist
     for f in files:
         if not os.path.isfile(f):
@@ -106,7 +106,7 @@ def dada_fildb(files, key, order, pagesize,):
     writer.setHeader(header)
 
     # wait if requested
-    sleep(args.delay)
+    sleep(delay)
 
     # write the data
     npage = int(np.ceil(filterbanks[0].nspectra() / pagesize))
