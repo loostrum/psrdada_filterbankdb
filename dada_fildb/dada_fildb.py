@@ -11,7 +11,7 @@ def create_header(filterbank, nbeam, pagesize, flip_band=True):
     bw = filterbank.nchans * filterbank.foff
     fch1 = filterbank.fch1
     if flip_band:
-        fch1 = filterbank.fch1 + bw - .5 * filterbank.foff
+        fch1 = filterbank.fch1 + bw - filterbank.foff
         bw = -bw
 
     # create RA and DEC HMS / DMS strings
