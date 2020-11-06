@@ -34,6 +34,7 @@ def create_header(filterbank, nbeam, pagesize, flip_band=True):
     header['INSTRUMENT'] = 'ARTS'
     header['FREQ'] = filterbank.fch1 + .5 * (filterbank.nchans - 1) * filterbank.foff
     header['BW'] = bw
+    header['CHANNEL_BANDWIDTH'] = bw / float(filterbank.nchans)
     header['TSAMP'] = filterbank.tsamp
     header['MIN_FREQUENCY'] = fch1
     header['NCHAN'] = filterbank.nchans
