@@ -50,6 +50,11 @@ def create_header(filterbank, nbeam, pagesize, flip_band=True):
     header['ZA_START'] = filterbank.za_start
     header['SCIENCE_CASE'] = 4
     header['PARSET'] = 'noparset'
+    # set TAB vs IAB
+    if nbeam > 1:
+        header['SCIENCE_MODE']  = 0  # I + TAB
+    else:
+        header['SCIENCE_MODE'] = 2  # I + IAB
 
     for k, v in header.items():
         if isinstance(v, bytes):
@@ -70,7 +75,12 @@ def get_data(filterbanks, page, pagesize, order):
         if order.upper() == 'FT':
             # filterbank is in Tf order, transpose
             fil_data = np.transpose(fil_data)
-        data[i] = fil_data
+        try:
+            data[i] = fil_data
+        except ValueError:
+            # shapes do not match
+            nsamp = fil_data.shape[1]
+            data[i][:, :nsamp] = fil_data
     return data
 
 
