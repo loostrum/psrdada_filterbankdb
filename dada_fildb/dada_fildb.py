@@ -77,10 +77,13 @@ def get_data(filterbanks, page, pagesize, order):
         if order.upper() == 'FT':
             # filterbank is in Tf order, transpose
             fil_data = np.transpose(fil_data)
+        if 'F' in order:
+            # filterbank has highest-freq first, flip
+            fil_data = fil_data[::-1]
         try:
             data[i] = fil_data
         except ValueError:
-            # shapes do not match
+            # shapes do not match, assume we are at the end of the file
             nsamp = fil_data.shape[1]
             data[i][:, :nsamp] = fil_data
     return data
