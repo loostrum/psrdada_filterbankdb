@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from time import sleep
 from psrdada import Writer
 from astropy.time import Time
 
@@ -90,6 +91,7 @@ def dada_fildb(files, key, order, pagesize,):
     for f in files:
         if not os.path.isfile(f):
             raise OSError(f'File not found: {f}')
+
     # open the input files
     filterbanks = []
     for f in files:
@@ -102,6 +104,9 @@ def dada_fildb(files, key, order, pagesize,):
     writer = Writer(int(key, 16))
     # set the header
     writer.setHeader(header)
+
+    # wait if requested
+    sleep(args.delay)
 
     # write the data
     npage = int(np.ceil(filterbanks[0].nspectra() / pagesize))
@@ -136,9 +141,14 @@ def main():
                         help='Data order (slowest to fastest changing axis) of '
                              'ringbuffer as a two-letter code '
                              'T = time, F = frequency (lowest freq first), f = frequency (highest freq first). '
+                             'If multiple input files are present, the slowest changing axis is always assumed '
+                             'to be beams '
                              '(Default: %(default)s)')
     parser.add_argument('-p', '--pagesize', type=int, required=True,
                         help='Number of time samples in one ringbuffer page')
+    parser.add_argument('-d', '--delay', type=float, default=0.,
+                        help='Delay (s) between writing first header and data to buffer '
+                             '(Default: %(default)s)')
 
     args = parser.parse_args()
 
